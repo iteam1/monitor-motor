@@ -1,0 +1,15 @@
+__pycache__
+.ipynb_checkpoints
+.vscode
+data
+
+*.npz
+*.h5
+*.pb
+
+*.zip
+*.tar
+*.rar
+
+C8/4.3_Plotly_Basics.ipynb
+OPENAI_API_KEY.txt
