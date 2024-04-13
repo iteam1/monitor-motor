@@ -1,5 +1,6 @@
 '''
 sudo chmod a+rw /dev/ttyUSB0
+
 '''
 import serial
 import pymodbus
@@ -22,9 +23,10 @@ client = ModbusSerialClient(method = my_method,
 connection_status = client.connect()
 print('connection_status',connection_status)
 
-
-result = client.read_holding_registers(address=0x00,count=16,slave=2)
+# Read holding register start from 40001=0x00
+result = client.read_holding_registers(address=0x00,count=100,slave=2)
 print(result)
 print(result.registers)
+
 #Closes the underlying socket connection
 client.close()
