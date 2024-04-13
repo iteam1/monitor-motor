@@ -23,7 +23,6 @@ SLAVE_ID = 2
 ADDRESS_START = 0x00
 COUNT = 125
 
-
 if __name__ == "__main__":
     
     # Establish connection
