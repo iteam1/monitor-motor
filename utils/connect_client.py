@@ -10,8 +10,8 @@ print('Import Successfully!')
 my_port = '/dev/ttyUSB0'
 my_method = 'rtu'
 
-client = ModbusSerialClient(method = "rtu",
- port="/dev/ttyUSB0",
+client = ModbusSerialClient(method = my_method,
+ port = my_port,
  stopbits = 1,
   bytesize = 8,
    parity = 'N',
@@ -23,8 +23,8 @@ connection_status = client.connect()
 print('connection_status',connection_status)
 
 
-result = client.read_holding_registers(address=40001,count=2,unit=1)
+result = client.read_holding_registers(address=0x00,count=16,slave=2)
 print(result)
-
+print(result.registers)
 #Closes the underlying socket connection
 client.close()
