@@ -1,4 +1,5 @@
 class SinamicV20:
+    
     def __init__(self, client, slave_id):
         print('[SinamicV20] Start __init__')
         
@@ -1054,7 +1055,7 @@ class SinamicV20:
                 print('[SinamicV20] Error',e)
         return result
     
-    def read_raw__multi_address(self,addrs):
+    def read_raw_multi_address(self,addrs):
         list_of_values = []
         if len(addrs) <= self.MAX_LENGTH_OF_ADDRESS:
             for addr in addrs:

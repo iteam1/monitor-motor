@@ -58,7 +58,7 @@ if __name__ == "__main__":
     
     addrs = [40023, 40521, 40028]
     
-    res = inverter.read_raw__multi_address(addrs)
+    res = inverter.read_raw_multi_address(addrs)
     
     for i,addr in enumerate(addrs):
         print(f"address={addr} name={inverter.address_to_param[addr]['NAME']} res={res[i]}")
