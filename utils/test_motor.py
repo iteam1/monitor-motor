@@ -40,12 +40,15 @@ if __name__ == "__main__":
     # instantiate
     inverter = SinamicV20(client=client,slave_id=2)
     
-    #print(inverter.name_to_address)
+    #
+    addr = 40023
+    res = inverter.read_raw_single_address(addr)
+    print(f"address={addr} name={inverter.address_to_param[addr]['NAME']} res={res}")
     
-    #print(inverter.ADDRESS_LENGTH)
+    addr = 40521
+    res = inverter.read_raw_single_address(addr)
+    print(f"address={addr} name={inverter.address_to_param[addr]['NAME']} res={res}")
     
-    inverter.read_single_address(40001)
-    inverter.read_single_address(40002)
-    inverter.read_single_address(40003)
-    
-    
+    addr = 40028
+    res = inverter.read_raw_single_address(addr)
+    print(f"address={addr} name={inverter.address_to_param[addr]['NAME']} res={res}")

@@ -1,3 +1,5 @@
+import json
+
 class SinamicV20:
     def __init__(self, client, slave_id):
         print('[SinamicV20] Start __init__')
@@ -740,74 +742,74 @@ class SinamicV20:
             40002:0x01,
             40003:0x02,
             40004:0x03,
-            40005:'CMD_FWD_REV',
-            40006:'CMD_START',
-            40007:'FAULT_ACK',
-            40008:'PID_SETP_REF',
-            40009:'ENABLE_PID',
-            40010:'CURRENT_LMT',
-            40011:'ACCEL_TIME',
-            40012:'DECEL_TIME',
-            40014:'DIGITAL_OUT_1',
-            40015:'DIGITAL_OUT_2',
-            40016:'REF_FREQ',
-            40017:'PID_UP_LMT',
-            40018:'PID_LO_LMT',
-            40019:'P_GAIN',
-            40020:'I_GAIN',
-            40021:'D_GAIN',
-            40022:'FEEDBK_GAIN',
-            40023:'LOW_PASS',
-            40024:'FREQ_OUTPUT',
-            40025:'SPEED',
-            40026:'CURRENT',
-            40027:'TORQUE',
-            40028:'ACTUAL_PWR',
-            40029:'TOTAL_KWH',
-            40030:'DC_BUS_VOLTS',
-            40031:'REFERENCE',
-            40032:'RATED_PWR',
-            40033:'OUTPUT_VOLTS',
-            40034:'FWD_REV',
-            40035:'STOP_RUN',
-            40036:'AT_MAX_FREQ',
-            40037:'CONTROL_MODE',
-            40038:'ENABLED',
-            40039:'READY_TO_RUN',
-            40040:'ANALOG_IN_1',
-            40041:'ANALOG_IN_2',
-            40042:'ANALOG_OUT_1',
-            40044:'FREQ_ACTUAL',
-            40045:'PID_SETP_OUT',
-            40046:'PID_OUTPUT',
-            40047:'PID_FEEDBACK',
-            40048:'DIGITAL_IN_1',
-            40049:'DIGITAL_IN_2',
-            40050:'DIGITAL_IN_3',
-            40051:'DIGITAL_IN_4',
-            40054:'FAULT',
-            40055:'LAST_FAULT',
-            40056:'FAULT_1',
-            40057:'FAULT_2',
-            40058:'FAULT_3',
-            40059:'WARNING',
-            40060:'LAST_WARNING',
-            40061:'INVERTER_VER',
-            40062:'DRIVE_MODEL',
-            40100:'STW',
-            40101:'HSW',
-            40110:'ZSW',
-            40111:'HIW',
-            40300:'INVERTER_MODEL',
-            40301:'INVERTER_VER',
-            40349:'HAND_AUTO',
-            40403:'FAULT_4',
-            40404:'FAULT_5',
-            40405:'FAULT_6',
-            40406:'FAULT_7',
-            40407:'FAULT_8',
-            40499:'PRM_ERROR_CODE',
-            40521:'PI_FEEDBACK'
+            40005:0x04,
+            40006:0x05,
+            40007:0x06,
+            40008:0x07,
+            40009:0x08,
+            40010:0x09,
+            40011:0x0a,
+            40012:0x0b,
+            40014:0x0d,
+            40015:0x0e,
+            40016:0x0f,
+            40017:0x10,
+            40018:0x11,
+            40019:0x12,
+            40020:0x13,
+            40021:0x14,
+            40022:0x15,
+            40023:0x15,
+            40024:0x17,
+            40025:0x18,
+            40026:0x19,
+            40027:0x1a,
+            40028:0x1b,
+            40029:0x1c,
+            40030:0x1d,
+            40031:0x1e,
+            40032:0x1f,
+            40033:0x20,
+            40034:0x21,
+            40035:0x22,
+            40036:0x23,
+            40037:0x24,
+            40038:0x25,
+            40039:0x26,
+            40040:0x27,
+            40041:0x28,
+            40042:0x29,
+            40044:0x2b,
+            40045:0x2c,
+            40046:0x2d,
+            40047:0x2e,
+            40048:0x2f,
+            40049:0x30,
+            40050:0x31,
+            40051:0x32,
+            40054:0x35,
+            40055:0x36,
+            40056:0x37,
+            40057:0x38,
+            40058:0x39,
+            40059:0x3a,
+            40060:0x3b,
+            40061:0x3c,
+            40062:0x3d,
+            40100:0x63,
+            40101:0x64,
+            40110:0x6d,
+            40111:0x6e,
+            40300:0x12b,
+            40301:0x12c,
+            40349:0x15c,
+            40403:0x192,
+            40404:0x193,
+            40405:0x194,
+            40406:0x195,
+            40407:0x196,
+            40499:0x1f2,
+            40521:0x208
         }
         
         # address_to_name
@@ -1041,23 +1043,22 @@ class SinamicV20:
         
         print('[SinamicV20] End __init__')
     
-    def read_single_address(self,addr):
-        list_of_values = []
+    def read_raw_single_address(self,addr):
+        result = None
         if addr in self.ADDRESS_LIST: 
             try:
                 result = self.client.read_holding_registers(address =self.address_to_hex[addr],
                                                             count = 1,
                                                             slave = self.slave_id)
-                print('[SinamicV20]',result)
-                print('[SinamicV20]',result.registers)
+                result = result.registers[0]
             except Exception as e:
                 print('[SinamicV20] Error',e)
-        return list_of_values
+        return result
     
-    def read_multi_address(self,addrs):
+    def read_raw__multi_address(self,addrs):
         list_of_values = []
         return list_of_values
     
-    def read_all_address(self,addr):
+    def read_raw__all_address(self,addr):
         list_of_values = []
         return list_of_values
