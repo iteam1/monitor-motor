@@ -1,2 +1,4 @@
 pymodbus
 pyserial
+PyQt5
+pyqtgraph

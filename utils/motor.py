@@ -1,5 +1,3 @@
-import json
-
 class SinamicV20:
     def __init__(self, client, slave_id):
         print('[SinamicV20] Start __init__')
