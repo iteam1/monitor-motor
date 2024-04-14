@@ -24,32 +24,33 @@ BAUDRATE = 9600
 SLAVE_ID = 2
 N_SAMPLES = 100
 
-# Establish connection
-client = ModbusSerialClient(method = METHOD,
-                            port = PORT,
-                            stopbits = STOPBITS,
-                            bytesize = BYTESIZE,
-                            parity = PARITY,
-                            baudrate= BAUDRATE)
-
-# Connect to serial modbus server
-connection_status = client.connect()
-print('connection_status',connection_status)
-
-# instantiate
-inverter = SinamicV20(client=client,slave_id=2)
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, *args, **kwargs):
         
         super(MainWindow, self).__init__(*args, **kwargs)
         
+        # Establish connection
+        self.client = ModbusSerialClient(method = METHOD,
+                                    port = PORT,
+                                    stopbits = STOPBITS,
+                                    bytesize = BYTESIZE,
+                                    parity = PARITY,
+                                    baudrate= BAUDRATE)
+
+        # Connect to serial modbus server
+        connection_status = self.client.connect()
+        print('connection_status',connection_status)
+        
+        # instantiate
+        self.inverter = SinamicV20(client=self.client,slave_id=2)
+
         self.graphWidget = pg.PlotWidget()
         self.setCentralWidget(self.graphWidget)
         
         # time-series data
         self.x = list(range(N_SAMPLES)) # 100 time points
-        self.y = [randint(0,100) for _ in range(N_SAMPLES)]  # 100 data points
+        self.y = [0]*N_SAMPLES  # 100 data points
         
         # setup widget
         self.graphWidget.setBackground('b')
@@ -69,7 +70,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.x.append(self.x[-1]+1) # Add new value 1 higher than the last
         
         self.y = self.y[1:] # Remove the first y element
-        self.y.append(randint(0,100))  # Add a new random value.
+        self.y.append(self.inverter.read_raw_single_address(40025))  # Add a new random value.
         
         # Update dataset
         self.data_line.setData(self.x, self.y) # Update the data
