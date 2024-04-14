@@ -1054,7 +1054,7 @@ class SinamicV20:
                 print('[SinamicV20] Error',e)
         return list_of_values
     
-    def read_multi_address(self,addr):
+    def read_multi_address(self,addrs):
         list_of_values = []
         return list_of_values
     
