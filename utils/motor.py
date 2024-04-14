@@ -893,6 +893,7 @@ class SinamicV20:
         
         self.ADDRESS_LENGTH = len(self.address_to_name.keys())
         self.ADDRESS_LIST = list(self.address_to_name.keys())
+        self.MAX_LENGTH_OF_ADDRESS = 125
         
         # address_to_param
         self.address_to_param = {
@@ -1057,8 +1058,15 @@ class SinamicV20:
     
     def read_raw__multi_address(self,addrs):
         list_of_values = []
+        if len(addrs) <= self.MAX_LENGTH_OF_ADDRESS:
+            for addr in addrs:
+                res = self.read_raw_single_address(addr)
+                list_of_values.append(res)
         return list_of_values
     
-    def read_raw__all_address(self,addr):
+    def read_raw_all_address(self):
         list_of_values = []
+        for addr in self.ADDRESS_LIST:
+                res = self.read_raw_single_address(addr)
+                list_of_values.append(res)
         return list_of_values
