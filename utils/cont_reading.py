@@ -5,8 +5,6 @@ python utils/cont_reading.py
 '''
 import time
 import datetime
-import serial
-import pymodbus
 from pymodbus.client import ModbusSerialClient
 print('Import Successfully!')
 
