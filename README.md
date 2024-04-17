@@ -1,6 +1,16 @@
 # ts
 time seires
 
+![diagram](./assets/imgs/diagram.png)
+
+# todo
+1. Read documents (fault) ☑
+2. Write script read all params □
+3. Build collector & database □
+4. Notebooks (threshold, stastictic, ML) □
+5. Build visualizer □
+6. Build maintainer □
+
 # references
 
 [pymodbus](https://pymodbus.readthedocs.io/en/latest/source/readme.html)
