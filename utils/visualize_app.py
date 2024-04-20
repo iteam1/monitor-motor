@@ -3,11 +3,8 @@ sudo chmod a+rw /dev/ttyUSB0
 python3 utils/visualize_app.py
 '''
 import sys
-import time
-import datetime
 import pyqtgraph as pg
 from motor import SinamicV20
-from random import randint
 from PyQt5 import QtWidgets, QtCore
 from pyqtgraph import PlotWidget, plot
 from pymodbus.client import ModbusSerialClient
@@ -53,7 +50,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.y = [0]*N_SAMPLES  # 100 data points
         
         # setup widget
-        self.graphWidget.setBackground('b')
+        self.graphWidget.setBackground('black')
         pen = pg.mkPen(color=(255,0,0))
         self.data_line = self.graphWidget.plot(self.x, self.y, pen=pen)
         
@@ -64,8 +61,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.timer.start()
         
     def update_plot_data(self):
+        
         y_new = self.inverter.read_raw_single_address(40025)
-        if y_new is not None:
+        
+        if isinstance(y_new, (int, float)):
             # Add data
             self.x = self.x[1:] # Remove the first x element
             self.x.append(self.x[-1]+1) # Add new value 1 higher than the last

@@ -1,3 +1,5 @@
+import pymodbus
+
 class SinamicV20:
     
     def __init__(self, client, slave_id):
@@ -1044,15 +1046,21 @@ class SinamicV20:
         print('[SinamicV20] End __init__')
     
     def read_raw_single_address(self,addr):
+        
         result = None
+        
         if addr in self.ADDRESS_LIST: 
             try:
                 result = self.client.read_holding_registers(address =self.address_to_hex[addr],
                                                             count = 1,
                                                             slave = self.slave_id)
-                result = result.registers[0]
+                
+                if type(result) is pymodbus.register_read_message.ReadHoldingRegistersResponse:
+                    result = result.registers[0]
+                    
             except Exception as e:
                 print('[SinamicV20] Error',e)
+                
         return result
     
     def read_raw_multi_address(self,addrs):
