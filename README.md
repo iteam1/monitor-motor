@@ -11,7 +11,19 @@ time seires
 5. Build visualizer □
 6. Build maintainer □
 
+# data
+- stopped: data/data1.csv
+- xxHz: data/data2.csv (normal speed)
+- yyHz: data/data3.csv (high speed)
+- zzHz: data/data3.csv (low speed)
+
 # references
+
+[ SQLite Database with Python: How to Create Tables, Insert Data, and Run Queries ](https://www.youtube.com/watch?v=ZQAnkjfvZAw)
+
+[ Anomaly detection in time series with Python | Data Science with Marco ](https://www.youtube.com/watch?v=qy41dXGbAxY)
+
+[Anomaly detection in multivariate time series ](https://www.kaggle.com/code/drscarlat/anomaly-detection-in-multivariate-time-series)
 
 [pymodbus](https://pymodbus.readthedocs.io/en/latest/source/readme.html)
 
