@@ -64,16 +64,20 @@ class MainWindow(QtWidgets.QMainWindow):
         self.timer.start()
         
     def update_plot_data(self):
-        
-        # Add data
-        self.x = self.x[1:] # Remove the first x element
-        self.x.append(self.x[-1]+1) # Add new value 1 higher than the last
-        
-        self.y = self.y[1:] # Remove the first y element
-        self.y.append(self.inverter.read_raw_single_address(40025))  # Add a new random value.
-        
-        # Update dataset
-        self.data_line.setData(self.x, self.y) # Update the data
+        y_new = self.inverter.read_raw_single_address(40025)
+        if y_new is not None:
+            # Add data
+            self.x = self.x[1:] # Remove the first x element
+            self.x.append(self.x[-1]+1) # Add new value 1 higher than the last
+            
+            self.y = self.y[1:] # Remove the first y element
+            
+            self.y.append(y_new)  # Add a new random value.
+            
+            # Update dataset
+            self.data_line.setData(self.x, self.y) # Update the data
+        else:
+            pass
         
 if __name__ == "__main__":
     
