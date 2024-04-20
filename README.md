@@ -5,7 +5,7 @@ time seires
 
 # todo
 1. Read documents (fault) ☑
-2. Write script read all params □
+2. Write script read all params ☑
 3. Build collector & database □
 4. Notebooks (threshold, stastictic, ML) □
 5. Build visualizer □
