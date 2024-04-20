@@ -1057,6 +1057,9 @@ class SinamicV20:
                 
                 if type(result) is pymodbus.register_read_message.ReadHoldingRegistersResponse:
                     result = result.registers[0]
+                else:
+                    #print(type(result))    
+                    result = None
                     
             except Exception as e:
                 print('[SinamicV20] Error',e)
