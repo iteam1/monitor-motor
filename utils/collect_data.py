@@ -20,6 +20,8 @@ SLAVE_ID = 2
 N_SAMPLES = 100
 CSV_FILE = 'data.csv'
 
+count = 0
+
 def write_csv(data):
     with open(CSV_FILE, 'a') as outfile:
         writer = csv.writer(outfile)
@@ -49,7 +51,9 @@ if __name__ == "__main__":
 
         # get inverter values
         list_of_values = inverter.read_raw_all_address()
-        print(timestamp,len(list_of_values))
+        print(count,'-', timestamp,'-', len(list_of_values))
  
         # append to csv file
         write_csv(list_of_values)
+        
+        count+=1
