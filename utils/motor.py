@@ -1080,3 +1080,10 @@ class SinamicV20:
                 res = self.read_raw_single_address(addr)
                 list_of_values.append(res)
         return list_of_values
+    
+    def read_raw_all_address_convert_dict(self):
+        dict_of_values = {}
+        for addr in self.ADDRESS_LIST:
+                res = self.read_raw_single_address(addr)
+                dict_of_values[self.address_to_name[addr]] = res
+        return dict_of_values
