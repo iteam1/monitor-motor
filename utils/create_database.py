@@ -2,7 +2,6 @@
 python3 utils/create_database.py
 '''
 import sqlite3
-import pandas as pd
 
 # init
 TABLE_NAME  = 'sinamicv20'
