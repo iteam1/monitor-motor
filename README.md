@@ -19,6 +19,8 @@ time seires
 
 # references
 
+https://inloop.github.io/sqlite-viewer/
+
 https://csv-viewer-online.github.io/
 
 [ SQLite Database with Python: How to Create Tables, Insert Data, and Run Queries ](https://www.youtube.com/watch?v=ZQAnkjfvZAw)
