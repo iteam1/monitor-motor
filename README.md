@@ -19,6 +19,8 @@ time seires
 
 # references
 
+https://csv-viewer-online.github.io/
+
 [ SQLite Database with Python: How to Create Tables, Insert Data, and Run Queries ](https://www.youtube.com/watch?v=ZQAnkjfvZAw)
 
 [ Anomaly detection in time series with Python | Data Science with Marco ](https://www.youtube.com/watch?v=qy41dXGbAxY)

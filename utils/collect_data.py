@@ -51,7 +51,7 @@ if __name__ == "__main__":
 
         # get inverter values
         list_of_values = inverter.read_raw_all_address()
-        print(count,'-', timestamp,'-', len(list_of_values))
+        print(count, '-', len(list_of_values), '-', timestamp)
  
         # append to csv file
         write_csv(list_of_values)
