@@ -20,6 +20,7 @@ N_SAMPLES = 100
 
 ID = 0
 TABLE_NAME  = 'sinamicv20'
+DATABASE_PATH  = 'data/inverter.db'
 
 def generate_update_query_by_id(table_name, data_dict, id):
     query = f"UPDATE {table_name} SET "
@@ -47,7 +48,7 @@ if __name__ == "__main__":
     
     inverter = SinamicV20(client=client,slave_id=2)
     
-    conn = sqlite3.connect('data/inverter.db')
+    conn = sqlite3.connect(DATABASE_PATH)
     
     c = conn.cursor()
     
@@ -58,10 +59,12 @@ if __name__ == "__main__":
         
         update_query = generate_update_query_by_id(TABLE_NAME, dict_of_values, ID)
         
-        c.execute(update_query)
+        try:
+            c.execute(update_query)
+            conn.commit()
+        except Exception as e:
+            print(e)
         
         print(update_query)
-    
-    conn.commit()
 
     conn.close()

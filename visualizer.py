@@ -1,46 +1,31 @@
 '''
 sudo chmod a+rw /dev/ttyUSB0
-python3 utils/visualize_app.py
+python3 visualizer.py
 '''
 import sys
+import sqlite3
 import pyqtgraph as pg
-from motor import SinamicV20
+from utils.motor import SinamicV20
 from PyQt5 import QtWidgets, QtCore
 from pyqtgraph import PlotWidget, plot
 from pymodbus.client import ModbusSerialClient
 
 print('Import successfully!')
 
-# Initialize
-PORT = '/dev/ttyUSB0'
-METHOD = 'rtu'
-STOPBITS = 1
-BYTESIZE = 8
-PARITY = 'N'
-BAUDRATE = 9600
-SLAVE_ID = 2
+ID = 0
+TABLE_NAME  = 'sinamicv20'
+DATABASE_PATH = 'data/inverter.db'
 N_SAMPLES = 100
 
-
 class MainWindow(QtWidgets.QMainWindow):
+    
     def __init__(self, *args, **kwargs):
         
         super(MainWindow, self).__init__(*args, **kwargs)
-        
-        # Establish connection
-        self.client = ModbusSerialClient(method = METHOD,
-                                    port = PORT,
-                                    stopbits = STOPBITS,
-                                    bytesize = BYTESIZE,
-                                    parity = PARITY,
-                                    baudrate= BAUDRATE)
 
-        # Connect to serial modbus server
-        connection_status = self.client.connect()
-        print('connection_status',connection_status)
-        
-        # instantiate
-        self.inverter = SinamicV20(client=self.client,slave_id=2)
+        # Connect to database
+        self.conn = sqlite3.connect(DATABASE_PATH)
+        self.c = self.conn.cursor()
 
         self.graphWidget = pg.PlotWidget()
         self.setCentralWidget(self.graphWidget)
@@ -62,7 +47,13 @@ class MainWindow(QtWidgets.QMainWindow):
         
     def update_plot_data(self):
         
-        y_new = self.inverter.read_raw_single_address(40025)
+        # query = """SELECT * FROM sinamicv20 WHERE ID = 0"""
+        query = """SELECT SPEED FROM sinamicv20 WHERE ID = 0"""
+        
+        self.c.execute(query)
+        self.conn.commit()
+        
+        y_new =  self.c.fetchone()[0]
         
         if isinstance(y_new, (int, float)):
             # Add data
