@@ -27,8 +27,7 @@ if __name__ == "__main__":
     
     # Load model
     model = load('notebooks/model.joblib') 
-
-    
+  
     while True:
         
         query = """SELECT * FROM sinamicv20 WHERE ID = 0"""
@@ -43,7 +42,7 @@ if __name__ == "__main__":
         
         if speed != 0:
             if speed < 7:
-                print('SPEE =',speed,'=> WARNING SLOW SPEED!')
+                print('SPEED =',speed,'=> WARNING SLOW SPEED!')
             elif speed > 13:
                 print('SPEED =',speed,'=> WARNING HIGH SPEED!')
             else:
