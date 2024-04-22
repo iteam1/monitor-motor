@@ -13,15 +13,15 @@ time seires
 
 # data
 - stopped: data/data1.csv
-- xxHz: data/data2.csv (normal speed)
-- yyHz: data/data3.csv (high speed)
-- zzHz: data/data3.csv (low speed)
+- 7Hz: data/data2.csv (normal speed)
+- 10Hz: data/data3.csv (high speed)
+- 13Hz: data/data3.csv (low speed)
 
 # references
 
-https://inloop.github.io/sqlite-viewer/
+[Sqlite-viewer](https://inloop.github.io/sqlite-viewer/)
 
-https://csv-viewer-online.github.io/
+[CSV-viewer](https://csv-viewer-online.github.io/)
 
 [ SQLite Database with Python: How to Create Tables, Insert Data, and Run Queries ](https://www.youtube.com/watch?v=ZQAnkjfvZAw)
 
