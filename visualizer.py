@@ -8,7 +8,6 @@ import pyqtgraph as pg
 from utils.motor import SinamicV20
 from PyQt5 import QtWidgets, QtCore
 from pyqtgraph import PlotWidget, plot
-from pymodbus.client import ModbusSerialClient
 
 print('Import successfully!')
 
@@ -55,6 +54,9 @@ class MainWindow(QtWidgets.QMainWindow):
         
         y_new =  self.c.fetchone()[0]
         
+        # convert
+        y_new = y_new * 8.10/242
+        
         if isinstance(y_new, (int, float)):
             # Add data
             self.x = self.x[1:] # Remove the first x element
@@ -71,6 +73,7 @@ class MainWindow(QtWidgets.QMainWindow):
         
 if __name__ == "__main__":
     
+    print('Drawing plot...')
     app = QtWidgets.QApplication(sys.argv)
     w = MainWindow()
     w.show()

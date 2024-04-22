@@ -35,7 +35,6 @@ def generate_update_query_by_id(table_name, data_dict, id):
     query += ";"
     return query
 
-
 if __name__ == "__main__":
     
     client = ModbusSerialClient(method = METHOD,
