@@ -3,20 +3,6 @@ time seires
 
 ![diagram](./assets/imgs/diagram.png)
 
-# todo
-1. Read documents (fault) ☑
-2. Write script read all params ☑
-3. Build collector & database □
-4. Notebooks (threshold, stastictic, ML) □
-5. Build visualizer □
-6. Build maintainer □
-
-# data
-- stopped: data/data1.csv
-- 7Hz: data/data2.csv (normal speed)
-- 10Hz: data/data3.csv (high speed)
-- 13Hz: data/data3.csv (low speed)
-
 # references
 
 [Sqlite-viewer](https://inloop.github.io/sqlite-viewer/)
