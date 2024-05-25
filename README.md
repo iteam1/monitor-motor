@@ -1,5 +1,4 @@
-# ts
-time seires
+# modcon
 
 ![diagram](./assets/imgs/diagram.png)
 
