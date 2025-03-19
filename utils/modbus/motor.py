@@ -1,9 +1,30 @@
+"""
+Siemens Sinamics V20 motor control class.
+
+This module provides a class for interfacing with Siemens Sinamics V20 
+inverters via Modbus RTU protocol. It handles reading and writing parameters,
+controlling the motor, and monitoring its status.
+"""
+
 import pymodbus
+from typing import Dict, Any, List, Optional, Union, Tuple
+from pymodbus.exceptions import ModbusException
+
+from utils.logger import get_logger
+
+logger = get_logger(__name__)
 
 class SinamicV20:
     
     def __init__(self, client, slave_id):
-        print('[SinamicV20] Start __init__')
+        """
+        Initialize the SinamicV20 controller.
+        
+        Args:
+            client: ModbusSerialClient instance for communication
+            slave_id: Slave ID of the inverter
+        """
+        logger.info(f'Initializing SinamicV20 with slave_id={slave_id}')
         
         # client connection
         self.client = client
@@ -1045,45 +1066,105 @@ class SinamicV20:
         
         print('[SinamicV20] End __init__')
     
-    def read_raw_single_address(self,addr):
+    def read_raw_single_address(self, address: int) -> Optional[int]:
+        """
+        Read a single register value from the specified address.
         
-        result = None
+        Args:
+            address: Modbus register address to read
+            
+        Returns:
+            The register value, or None if an error occurred
+        """
+        try:
+            # Convert address from 4XXXX to 0-based addressing
+            actual_address = address - 40001
+            
+            # Read the register
+            result = self.client.read_holding_registers(
+                address=actual_address,
+                count=1,
+                slave=self.slave_id
+            )
+            
+            # Check for errors
+            if result.isError():
+                logger.error(f"Error reading address {address}: {result}")
+                return None
+                
+            logger.debug(f"Read value {result.registers[0]} from address {address}")
+            return result.registers[0]
+            
+        except ModbusException as e:
+            logger.exception(f"Modbus exception reading address {address}: {e}")
+            return None
+        except Exception as e:
+            logger.exception(f"Error reading address {address}: {e}")
+            return None
+    
+    def read_raw_multi_address(self, addresses: List[int]) -> List[Optional[int]]:
+        """
+        Read multiple register values from the specified addresses.
         
-        if addr in self.ADDRESS_LIST: 
+        Args:
+            addresses: List of Modbus register addresses to read
+            
+        Returns:
+            List of register values, with None for any addresses that couldn't be read
+        """
+        values = []
+        
+        for address in addresses:
             try:
-                result = self.client.read_holding_registers(address =self.address_to_hex[addr],
-                                                            count = 1,
-                                                            slave = self.slave_id)
-                
-                if type(result) is pymodbus.register_read_message.ReadHoldingRegistersResponse:
-                    result = result.registers[0]
-                else:
-                    #print(type(result))    
-                    result = None
-                    
+                value = self.read_raw_single_address(address)
+                values.append(value)
             except Exception as e:
-                print('[SinamicV20] Error',e)
+                logger.exception(f"Error reading address {address}: {e}")
+                values.append(None)
+        
+        logger.debug(f"Read {len(values)} values from multiple addresses")
+        return values
+    
+    def read_raw_all_address(self) -> List[Optional[int]]:
+        """
+        Read all register values defined in the ADDRESS_LIST.
+        
+        Returns:
+            List of register values, with None for any addresses that couldn't be read
+        """
+        try:
+            values = []
+            
+            for address in self.ADDRESS_LIST:
+                value = self.read_raw_single_address(address)
+                values.append(value)
                 
-        return result
+            logger.debug(f"Read {len(values)} values from all addresses")
+            return values
+            
+        except Exception as e:
+            logger.exception(f"Error reading all addresses: {e}")
+            return [None] * len(self.ADDRESS_LIST)
     
-    def read_raw_multi_address(self,addrs):
-        list_of_values = []
-        if len(addrs) <= self.MAX_LENGTH_OF_ADDRESS:
-            for addr in addrs:
-                res = self.read_raw_single_address(addr)
-                list_of_values.append(res)
-        return list_of_values
-    
-    def read_raw_all_address(self):
-        list_of_values = []
-        for addr in self.ADDRESS_LIST:
-                res = self.read_raw_single_address(addr)
-                list_of_values.append(res)
-        return list_of_values
-    
-    def read_raw_all_address_convert_dict(self):
-        dict_of_values = {}
-        for addr in self.ADDRESS_LIST:
-                res = self.read_raw_single_address(addr)
-                dict_of_values[self.address_to_name[addr]] = res
-        return dict_of_values
+    def read_raw_all_address_convert_dict(self) -> Dict[str, Any]:
+        """
+        Read all register values and convert to a dictionary with parameter names as keys.
+        
+        Returns:
+            Dictionary of parameter values with parameter names as keys
+        """
+        try:
+            values_dict = {}
+            raw_values = self.read_raw_all_address()
+            
+            for i, address in enumerate(self.ADDRESS_LIST):
+                if i < len(raw_values):
+                    param_name = self.address_to_param[address]['NAME']
+                    values_dict[param_name] = raw_values[i]
+                    
+            logger.debug(f"Read {len(values_dict)} parameter values into dictionary")
+            return values_dict
+            
+        except Exception as e:
+            logger.exception(f"Error converting register values to dictionary: {e}")
+            return {}
