@@ -2,7 +2,9 @@
 
 ModCon is a comprehensive framework for controlling, monitoring, and visualizing data from Modbus-enabled devices, with a particular focus on Siemens Sinamics V20 inverters. The framework provides robust utilities for data collection, real-time visualization, and maintenance monitoring.
 
-![System Diagram](./assets/imgs/diagram.png)
+<p align="center">
+  <img src="./assets/imgs/diagram.png" alt="System Diagram">
+</p>
 
 ## Features
 
