@@ -66,7 +66,7 @@ modcon/
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/ monitor-motor.git
+   git clone https://github.com/yourusername/monitor-motor.git
    cd  monitor-motor
 
    ```
