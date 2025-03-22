@@ -66,8 +66,9 @@ modcon/
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/modcon.git
-   cd modcon
+   git clone https://github.com/yourusername/ monitor-motor.git
+   cd  monitor-motor
+
    ```
 
 2. Install dependencies:
